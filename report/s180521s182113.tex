@@ -58,6 +58,33 @@
 
 % CONTENT %
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Source coding and reversible data compression}
+
+\subsection{Question 5}
+\paragraph{}First, we can compute the marginal probability distribution of all the symbols based on the given Morse text. The distribution is:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Symbol}      & . & - & \_ & / \\ \hline
+    \textbf{Probability} & 0.43378 & 0.28706 & 0.21452 & 0.06464 \\ \hline
+    \end{tabular}
+    \caption{Marginal probability distribution of all the symbols}
+\end{table}
+Based on the distribution of probabilities, we can compute the binary Huffman code. We get the following code:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Symbol}      & . & - & \_ & / \\ \hline
+    \textbf{Huffman code} & 0 & 11 & 101 & 100 \\ \hline
+    \end{tabular}
+    \caption{Binary Huffman code}
+\end{table}
+By applying the obtained Huffman code to the Morse text, we get the encoded Morse text whose size is 2213141 bits. The original Morse text has a size of 4797160 bits. Thus, we have a compression rate of 2.16758.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \end{document}
