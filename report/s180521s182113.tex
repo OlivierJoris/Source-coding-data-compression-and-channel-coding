@@ -85,6 +85,18 @@ Based on the distribution of probabilities, we can compute the binary Huffman co
 \end{table}
 By applying the obtained Huffman code to the Morse text, we get the encoded Morse text whose size is 2213141 bits. The original Morse text has a size of 4797160 bits. Thus, we have a compression rate of 2.16758.
 
+\subsection{Question 6}
+\paragraph{}We can compute the expected average length of the Huffman code by computing the sum for the 4 symbols of the probability of each symbol times the length of the code associated with the symbol.
+We get that the expected average length is equal to 1.84538.\\
+By comparing to the empirical average length of the Huffman code, we get:
+$$\text{Length of encoded } / \text{ length of initial text} = 1.84538$$
+This value is the same as the one for the expected average length which is logical since the expected average length was computed based on the probabilities of occurrence of each symbol based on the given Morse text.\\
+By comparing to the theoretical bounds, we get that:\\
+\begin{equation}
+    \frac{H(S)}{log_2(q)} \leq \overline{n} \leq \frac{H(S)}{log_2(q)} + 1$ because $1.77138 \leq 1.84538 \leq 2.77138
+\end{equation}
+Thus, our code is optimal, because the inequation is satisfied, which was expected because Huffman codes are optimal. But, the obtained code is not absolutely optimal because $\frac{H(S)}{log_2(q)} \neq \overline{n}$.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \end{document}
