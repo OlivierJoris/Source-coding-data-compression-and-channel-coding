@@ -83,7 +83,7 @@ Based on the distribution of probabilities, we can compute the binary Huffman co
     \end{tabular}
     \caption{Binary Huffman code}
 \end{table}
-By applying the obtained Huffman code to the Morse text, we get the encoded Morse text whose size is 2213141 bits. The original Morse text has a size of 4797160 bits. Thus, we have a compression rate of 2.16758.
+By applying the obtained Huffman code to the Morse text, we get the encoded Morse text whose size is 2213141 bits. The original Morse text has a size of 2398580 bits. Thus, we have a compression rate of 1.08379.
 
 \subsection{Question 6}
 \paragraph{}We can compute the expected average length of the Huffman code by computing the sum for the 4 symbols of the probability of each symbol times the length of the code associated with the symbol.
@@ -105,6 +105,26 @@ Thus, our code is optimal, because the inequation is satisfied, which was expect
     \caption{Evolution of empirical average length}
 \end{figure}
 As we can observe on the plot, the empirical average length decreases as the length of the input text increases.
+
+\subsection{Question 14}
+\paragraph{}By computing the Huffman code on the original (27 symbols) text, we get the following code:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+    \hline
+    \textbf{Symbol} & \textbf{a} & \textbf{b} & \textbf{c} & \textbf{d} & \textbf{e} & \textbf{f} & \textbf{g} \\ \hline
+    \textbf{Code}   & 1010       & 100000     & 100010     & 11010      & 001        & 100011     & 00000      \\ \hline
+    \textbf{Symbol} & \textbf{h} & \textbf{i} & \textbf{j} & \textbf{k} & \textbf{l} & \textbf{m} & \textbf{n} \\ \hline
+    \textbf{Code}   & 0111       & 0100       & 1100111001 & 1100110    & 11000      & 110010     & 0110       \\ \hline
+    \textbf{Symbol} & \textbf{o} & \textbf{p} & \textbf{q} & \textbf{r} & \textbf{s} & \textbf{t} & \textbf{u} \\ \hline
+    \textbf{Code}   & 1001       & 100001     & 1100111011 & 0101       & 0001       & 1011       & 00001      \\ \hline
+    \textbf{Symbol} & \textbf{v} & \textbf{w} & \textbf{x} & \textbf{y} & \textbf{z} & \textbf{}  & \textbf{}  \\ \hline
+    \textbf{Code}   & 11001111   & 110110     & 1100111010 & 110111     & 1100111000 & 111        &            \\ \hline
+    \end{tabular}
+    \caption{Binary Huffman code for original text}
+\end{table}
+The expected average length of the code is 4.15047 and the experimental length of the encoded text is 1711279 bits.\\
+The original text has a size of 2061550 bits and the encoded text has a size of 1711279 bits. Thus, the compression rate is 1.2046 (= 2061550/1711279).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
