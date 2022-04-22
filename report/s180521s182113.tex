@@ -109,6 +109,12 @@ the same as the one found during the exercise session. It is not a problem becau
     \item Encoded sequence: 100011101100001000010
 \end{itemize}
 
+\subsection{Comparison between the two versions of the Lempel-Ziv algorithm (question 3)}
+\paragraph{}The basic version has one main problem which is address coding. It needs to know the
+size of the dictionary before an address encoding. The on-line version solves this problem by using the current dictionary size to determine the number of bits which is equal to $\lceil\log_2{N}\rceil$, where $N$ is the dictionary size. It is thus decreasing the size of the encoded text. This on-line variant is most of the time not very competitive in
+terms of optimality but is very robust because it does not need assumptions about source behaviour and can thus allow an insteantaneous coding without having to browse the dictionary multiple times. The asympotic performances are reached only when the dictionary starts to become
+representative: when it contains a significant fraction of sufficiently long typical messages.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \end{document}
