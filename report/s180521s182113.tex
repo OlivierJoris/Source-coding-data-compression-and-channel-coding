@@ -85,6 +85,8 @@ Based on the distribution of probabilities, we can compute the binary Huffman co
 \end{table}
 By applying the obtained Huffman code to the Morse text, we get the encoded Morse text whose size is 2213141 bits. The original Morse text has a size of 2398580 bits. Thus, we have a compression rate of 1.08379.
 
+%%%%%
+
 \subsection{Question 6}
 \paragraph{}We can compute the expected average length of the Huffman code by computing the sum for the 4 symbols of the probability of each symbol times the length of the code associated with the symbol.
 We get that the expected average length is equal to 1.84538.\\
@@ -97,6 +99,8 @@ By comparing to the theoretical bounds, we get that:\\
 \end{equation}
 Thus, our code is optimal, because the inequation is satisfied, which was expected because Huffman codes are optimal. But, the obtained code is not absolutely optimal because $\frac{H(S)}{log_2(q)} \neq \overline{n}$.
 
+%%%%%
+
 \subsection{Question 7}
 \paragraph{}For the evolution of the empirical average length of the Huffman code with respect to the lengths of the input texts, we get the following plot:
 \begin{figure}[H]
@@ -105,6 +109,8 @@ Thus, our code is optimal, because the inequation is satisfied, which was expect
     \caption{Evolution of empirical average length}
 \end{figure}
 As we can observe on the plot, the empirical average length decreases as the length of the input text increases.
+
+%%%%%
 
 \subsection{Question 14}
 \paragraph{}By computing the Huffman code on the original (27 symbols) text, we get the following code:
@@ -125,6 +131,18 @@ As we can observe on the plot, the empirical average length decreases as the len
 \end{table}
 The expected average length of the code is 4.15047 and the experimental length of the encoded text is 1711279 bits.\\
 The original text has a size of 2061550 bits and the encoded text has a size of 1711279 bits. Thus, the compression rate is 1.2046 (= 2061550/1711279).
+
+%%%%%
+
+\subsection{Question 15}
+\paragraph{}By comparing the values obtained at the questions 5 and 14, we can conclude that it is better to encode
+directly the text without first converting it to Morse because the size of the encoded Morse text is 2213141 bits
+while the size of the encoded text is 1711279 bits. Furthermore, the compression rate obtained is higher in question 14
+compared to question 5.\\
+This can be justified theoretically by the fact that using Huffman encoding with 27 symbols instead of 4 symbols allows to
+benefit more from the frequencies of letters in English. For instance, the letter z in English is way less frequent
+than the letter e. While using the Morse encoding, the 2 symbols . and - both appear for some of the letters. Thus, we
+loose the benefit provided by less frequent letters that will get longer codes and more frequent letters will get shorter codes.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
