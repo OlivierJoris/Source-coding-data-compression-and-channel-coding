@@ -103,7 +103,11 @@ the same as the one found during the exercise session. It is not a problem becau
 
 \subsection{On-line Lempel-Ziv algorithm (question 2)}
 
-\paragraph{}
+\paragraph{}The example given in the course about state of the art in data compression on slide 50/53 where the sequence 1011010100010 is encoded gives this output our \texttt{LZ\_online} function:
+\begin{itemize}
+    \item Dictionnary: \{'': (0, ''), '1': (1, '1'), '0': (2, '00'), '11': (3, '011'), '01': (4, '101'), '010': (5, '1000'), '00': (6, '0100'), '10': (7, '0010')\}
+    \item Encoded sequence: 100011101100001000010
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
