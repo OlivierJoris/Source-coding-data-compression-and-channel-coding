@@ -63,7 +63,7 @@
 % Exercise 7 of the second exercise session (TP2), and report the output of your code
 % for this example. Explain how to extend your function to generate a Huffman code of
 % any (output) alphabet size.
-\subsection{Binary Huffman code (question 1)}
+\subsection{Question 1}
 \paragraph{}Our implementation is based on a data structure representing a Node of the tree which has 4 fields: 
 \begin{itemize}
 \item the symbol of the Node which is 'None' if the Node is not a leaf.
@@ -101,7 +101,7 @@ the same as the one found during the exercise session. It is not a problem becau
         \end{itemize}
 \end{itemize}
 
-\subsection{On-line Lempel-Ziv algorithm (question 2)}
+\subsection{Question 2}
 
 \paragraph{}The example given in the course about state of the art in data compression on slide 50/53 where the sequence 1011010100010 is encoded gives this output for our \texttt{LZ\_online} function:
 \begin{itemize}
@@ -109,13 +109,13 @@ the same as the one found during the exercise session. It is not a problem becau
     \item Encoded sequence: 100011101100001000010
 \end{itemize}
 
-\subsection{Comparison between the two versions of the Lempel-Ziv algorithm (question 3)}
+\subsection{Question 3}
 \paragraph{}The basic version has one main problem which is address coding. It needs to know the
 size of the dictionary before an address encoding. The on-line version solves this problem by using the current dictionary size to determine the number of bits which is equal to $\lceil\log_2{N}\rceil$, where $N$ is the dictionary size. It is thus decreasing the size of the encoded text. This on-line variant is most of the time not very competitive in
 terms of optimality but is very robust because it does not need assumptions about source behaviour and can thus allow an instantaneous coding without having to browse the dictionary multiple times. The asymptotic performances are reached only when the dictionary starts to become
 representative: when it contains a significant fraction of sufficiently long typical messages.
 
-\subsection{Implementation of the Lempel-Ziv 77 algorithm (question 4)}
+\subsection{Question 4}
 \paragraph{}Running the example given in Figure 2 with our function and taking a \texttt{window\_size} of size 7 gives us this output: [(0, 0, 'a'), (0, 0, 'b'), (0, 0, 'r'), (3, 1, 'c'), (2, 1, 'd'), (7, 4, 'd')]. We have chosen to set the size of the look ahead buffer to the size of the window because it allows to have longer matches prefix and the prefix cannot be longer than the this size.
 
 
