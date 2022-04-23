@@ -115,6 +115,9 @@ size of the dictionary before an address encoding. The on-line version solves th
 terms of optimality but is very robust because it does not need assumptions about source behaviour and can thus allow an insteantaneous coding without having to browse the dictionary multiple times. The asympotic performances are reached only when the dictionary starts to become
 representative: when it contains a significant fraction of sufficiently long typical messages.
 
+\subsection{Implementation of the Lempel-Ziv 77 algorithm (question 4)}
+\paragraph{}Running the example given in Figure 2 with our function and taking a \texttt{window\_size} of size 7 gives us this output: [(0, 0, 'a'), (0, 0, 'b'), (0, 0, 'r'), (3, 1, 'c'), (2, 1, 'd'), (7, 4, 'd')]. We have chosen to set the size of the look ahead buffer to the size of the window because it allows to have longer matches prefix and the prefix can not be longer than the this size.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \end{document}
