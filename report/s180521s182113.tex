@@ -107,16 +107,16 @@ By applying this principle on each block of 4 bits from the binary image signal,
     \includegraphics[scale=0.2]{q20.png}
     \caption{Image after simulating the channel effect with redundancy}
 \end{figure}
-As we can see in the picture, we observe less dots compared to \textit{question 18}. This is beacause we used redundancy with the Hamming(7,4) code.
+As we can see in the picture, we observe less dots compared to \textit{question 18}. This is because we used redundancy with the Hamming(7,4) code.
 Yet, we can still observe some dots. This is because Hamming(7,4) code can correct only one error per chunk of bits. In some cases, we might have more
 than one error per chunk thus the original source is not recoverable.
-\paragraph{}In order to decode the binary signal with redundancy, we used the syndrom decoding technique, as in the exercise sessions.\\
+\paragraph{}In order to decode the binary signal with redundancy, we used the syndrome decoding technique, as in the exercise sessions.\\
 To apply this technique, we consider that the source bits were correctly transmitted through the channel. Then, we recompute the 3 parity bits based on the received 4 source bits.
 Afterwards, we apply a bitwise and between the received parity bits and the re-computed parity bits.\\
 Based on the result of the bitwise operation, multiple cases are possible:
 \begin{itemize}
     \item If 2 or 3 bits are 1 in the result of the bitwise operation, we can deduce that one of the source bit has been incorrectly transmitted.
-    To recover from the error, we can procede the following way:
+    To recover from the error, we can proceed the following way:
         \begin{itemize}
             \item If bits 0 and 1 of the bitwise and are 1, we need to flip the second source bit.
             \item If bits 1 and 2 of the bitwise and are 1, we need to flip the fourth source bit.
@@ -126,6 +126,16 @@ Based on the result of the bitwise operation, multiple cases are possible:
     \item If 1 bit is 1 in the result of the bitwise operation, we can deduce that one of the parity bit has been incorrectly transmitted.
     \item It is possible that 2 or more bits were transmitted incorrectly. In that case, we cannot recover from the error.
 \end{itemize}
+
+%%%%%
+
+\subsection{Question 21}
+\paragraph{}In order to reduce the loss of information, we could use Reed-Solomon codes instead of Hamming(7,4) because they allow to correct more than 1 errors
+in some situations.\\
+Another solution is to replace the type of channel. For instance, replacing copper wire with fiber optic in computer networks.
+But, it is not also feasible.\\
+There is always a trade-off between the rate and the capability of correcting from errors. Thus, in order to increase the rate,
+we would need to decrease the redundancy introduced for parity.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
