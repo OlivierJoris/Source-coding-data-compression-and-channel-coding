@@ -81,10 +81,22 @@ The code is the binary representation of the grayscale value of each pixel.
     \includegraphics[scale=0.2]{q18.png}
     \caption{Image after simulating the channel effect}
 \end{figure}
-As we can see in the picture, after simulating the channel effect, there are a lot of small dots that are pixels with different grayscale values
-compared to there very close neighbors.\\
+As we can see in the picture, after simulating the channel effect, there are a lot of small dots\footnote{Zoom in the image to see them better.} that are pixels with different grayscale values
+compared to their very close neighbors.\\
 This is due to the fact that we are simulating a potential loss bit by bit and we are not using any sort of redundancy.
 Thus, if one of the most significant bits is modified, it completely changes the grayscale value for the pixel.
+
+%%%%%
+
+\subsection{Question 19}
+\paragraph{}In order to compute the Hamming(7,4) code for the binary image signal, we need to add 3 redundancy bits for every 4 bits. The 3 redundancy bits are:
+\begin{itemize}
+    \item Bit 1 = $(bit 0 + bit 1 + bit 2) \ mod \ 2$
+    \item Bit 2 = $(bit 1 + bit 2 + bit 3) \ mod \ 2$
+    \item Bit 3 = $(bit 0 + bit 2 + bit 3) \ mod \ 2$
+\end{itemize}
+where bit 0, bit 1, bit 2, and bit 3 are, respectively, the first, second, third, and fourth bits for which we want to add redundancy.\\
+By applying this principle on each block of 4 bits from the binary image signal, we get the Hamming(7,4) code for the entire binary image signal.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
