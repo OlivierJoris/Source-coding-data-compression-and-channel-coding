@@ -118,8 +118,6 @@ representative: when it contains a significant fraction of sufficiently long typ
 \subsection{Question 4}
 \paragraph{}Running the example given in Figure 2 with our function and taking a \texttt{window\_size} of size 7 gives us this output: [(0, 0, 'a'), (0, 0, 'b'), (0, 0, 'r'), (3, 1, 'c'), (2, 1, 'd'), (7, 4, 'd')]. We have chosen to set the size of the look ahead buffer to the size of the window because it allows to have longer matches prefix and the prefix cannot be longer than the this size.
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Channel coding}
 
@@ -248,6 +246,12 @@ Thus, our code is optimal, because the inequation is satisfied, which was expect
     \caption{Evolution of empirical average length}
 \end{figure}
 As we can observe on the plot, the empirical average length decreases as the length of the input text increases.
+
+%%%%%
+
+\subsection{Question 8}
+\paragraph{}By using the Lempel-Ziev algorithm to encode the Morse code, we get an encoded code with a total length of 1866281 bits.
+The original Morse code has a size of 2398580 bits. Thus, we get a compression rate of $1.28522 = \frac{2398580}{1866281}$.
 
 %%%%%
 
