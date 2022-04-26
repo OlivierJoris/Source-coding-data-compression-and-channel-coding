@@ -118,7 +118,106 @@ representative: when it contains a significant fraction of sufficiently long typ
 \subsection{Question 4}
 \paragraph{}Running the example given in Figure 2 with our function and taking a \texttt{window\_size} of size 7 gives us this output: [(0, 0, 'a'), (0, 0, 'b'), (0, 0, 'r'), (3, 1, 'c'), (2, 1, 'd'), (7, 4, 'd')]. We have chosen to set the size of the look ahead buffer to the size of the window because it allows to have longer matches prefix and the prefix cannot be longer than the this size.
 
+\section{Source coding and reversible data compression}
 
+\subsection{Question 5}
+\paragraph{}First, we can compute the marginal probability distribution of all the symbols based on the given Morse text. The distribution is:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Symbol}      & . & - & \_ & / \\ \hline
+    \textbf{Probability} & 0.43378 & 0.28706 & 0.21452 & 0.06464 \\ \hline
+    \end{tabular}
+    \caption{Marginal probability distribution of all the symbols}
+\end{table}
+Based on the distribution of probabilities, we can compute the binary Huffman code. We get the following code:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Symbol}      & . & - & \_ & / \\ \hline
+    \textbf{Huffman code} & 0 & 11 & 101 & 100 \\ \hline
+    \end{tabular}
+    \caption{Binary Huffman code}
+\end{table}
+By applying the obtained Huffman code to the Morse text, we get the encoded Morse text whose size is 2213141 bits. The original Morse text has a size of 2398580 bits. Thus, we have a compression rate of 1.08379.
+
+%%%%%
+
+\subsection{Question 6}
+\paragraph{}We can compute the expected average length of the Huffman code by computing the sum for the 4 symbols of the probability of each symbol times the length of the code associated with the symbol.
+We get that the expected average length is equal to 1.84538.\\
+By comparing to the empirical average length of the Huffman code, we get:
+$$\text{Length of encoded } / \text{ length of initial text} = 1.84538$$
+This value is the same as the one for the expected average length which is logical since the expected average length was computed based on the probabilities of occurrence of each symbol based on the given Morse text.\\
+By comparing to the theoretical bounds, we get that:\\
+\begin{equation}
+    \frac{H(S)}{log_2(q)} \leq \overline{n} \leq \frac{H(S)}{log_2(q)} + 1$ because $1.77138 \leq 1.84538 \leq 2.77138
+\end{equation}
+Thus, our code is optimal, because the inequation is satisfied, which was expected because Huffman codes are optimal. But, the obtained code is not absolutely optimal because $\frac{H(S)}{log_2(q)} \neq \overline{n}$.
+
+%%%%%
+
+\subsection{Question 7}
+\paragraph{}For the evolution of the empirical average length of the Huffman code with respect to the lengths of the input texts, we get the following plot:
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{q7.png}
+    \caption{Evolution of empirical average length}
+\end{figure}
+As we can observe on the plot, the empirical average length decreases as the length of the input text increases.
+
+%%%%%
+
+\subsection{Question 10}
+\paragraph{}The two algorithms tackle the compression problem using different strategies. The Huffman 
+algorithm is based on the frequency of each symbol whereas the LZ77 algorithm is based on referencing of 
+redundancy in previous blocks of symbols in the sequence. It is why the combination of these two algorithms can increase the compression rate according to the one obtained by using them alone.
+To combine these two algorithms we would first apply the LZ77 algorithm which has as purpose to detect the most redundant group of letters. We think it is better to first
+use the LZ77 algorithm because it might have group of letters which are the most frequent and that are not composed of the most frequent letters. For example: in english, the 
+most frequent letter is 'e' and the second most frequent letter is 't' but the most frequent group of two letters 'th'. Letter-oriented Huffman is good at detecting and compressing files using the letter frequencies alone, but it cannot detect correlations between consecutive letters.
+Then we would apply Huffman on the sequence compressed using the LZ77 algorithm. 
+
+\paragraph{}In general, most data compression algorithms are using these 2 parts. First they run the original data through one or multiple transformations typically highly tuned to the particular kind of redundancy in the particular kind of data being compressed like JPEG is doing or tuned to the limitations of human perception like MPEG is doing. Next they run the intermediate data through a single "entropy coder" (arithmetic coding, or Huffman coding, or asymmetric numeral system coding) which is pretty much the same for every kind of data.
+
+\subsection{Question 11}
+\paragraph{}The length of encoded morse text is equal to 2769551 bits and the compression rate is thus equal to 0.866053739396747 which is, as expected, very low because we have taken a window size equal to 7.
+
+\subsection{Question 12}
+\paragraph{}
+
+\subsection{Question 14}
+\paragraph{}By computing the Huffman code on the original (27 symbols) text, we get the following code:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+    \hline
+    \textbf{Symbol} & \textbf{a} & \textbf{b} & \textbf{c} & \textbf{d} & \textbf{e} & \textbf{f} & \textbf{g} \\ \hline
+    \textbf{Code}   & 1010       & 100000     & 100010     & 11010      & 001        & 100011     & 00000      \\ \hline
+    \textbf{Symbol} & \textbf{h} & \textbf{i} & \textbf{j} & \textbf{k} & \textbf{l} & \textbf{m} & \textbf{n} \\ \hline
+    \textbf{Code}   & 0111       & 0100       & 1100111001 & 1100110    & 11000      & 110010     & 0110       \\ \hline
+    \textbf{Symbol} & \textbf{o} & \textbf{p} & \textbf{q} & \textbf{r} & \textbf{s} & \textbf{t} & \textbf{u} \\ \hline
+    \textbf{Code}   & 1001       & 100001     & 1100111011 & 0101       & 0001       & 1011       & 00001      \\ \hline
+    \textbf{Symbol} & \textbf{v} & \textbf{w} & \textbf{x} & \textbf{y} & \textbf{z} & \textbf{}  & \textbf{}  \\ \hline
+    \textbf{Code}   & 11001111   & 110110     & 1100111010 & 110111     & 1100111000 & 111        &            \\ \hline
+    \end{tabular}
+    \caption{Binary Huffman code for original text}
+\end{table}
+The expected average length of the code is 4.15047 and the experimental length of the encoded text is 1711279 bits.\\
+The original text has a size of 2061550 bits and the encoded text has a size of 1711279 bits. Thus, the compression rate is 1.2046 (= 2061550/1711279).
+
+%%%%%
+
+\subsection{Question 15}
+\paragraph{}By comparing the values obtained at the questions 5 and 14, we can conclude that it is better to encode
+directly the text without first converting it to Morse because the size of the encoded Morse text is 2213141 bits
+while the size of the encoded text is 1711279 bits. Furthermore, the compression rate obtained is higher in question 14
+compared to question 5.\\
+This can be justified theoretically by the fact that using Huffman encoding with 27 symbols instead of 4 symbols allows to
+benefit more from the frequencies of letters in English. For instance, the letter z in English is way less frequent
+than the letter e. While using the Morse encoding, the 2 symbols . and - both appear for some of the letters. Thus, we
+loose the benefit provided by less frequent letters that will get longer codes and more frequent letters will get shorter codes.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Channel coding}
@@ -196,92 +295,6 @@ Another solution is to replace the type of channel. For instance, replacing copp
 But, it is not also feasible.\\
 There is always a trade-off between the rate and the capability of correcting from errors. Thus, in order to increase the rate,
 we would need to decrease the redundancy introduced for parity.
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Source coding and reversible data compression}
-
-\subsection{Question 5}
-\paragraph{}First, we can compute the marginal probability distribution of all the symbols based on the given Morse text. The distribution is:
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|c|c|c|c|c|}
-    \hline
-    \textbf{Symbol}      & . & - & \_ & / \\ \hline
-    \textbf{Probability} & 0.43378 & 0.28706 & 0.21452 & 0.06464 \\ \hline
-    \end{tabular}
-    \caption{Marginal probability distribution of all the symbols}
-\end{table}
-Based on the distribution of probabilities, we can compute the binary Huffman code. We get the following code:
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|c|c|c|c|c|}
-    \hline
-    \textbf{Symbol}      & . & - & \_ & / \\ \hline
-    \textbf{Huffman code} & 0 & 11 & 101 & 100 \\ \hline
-    \end{tabular}
-    \caption{Binary Huffman code}
-\end{table}
-By applying the obtained Huffman code to the Morse text, we get the encoded Morse text whose size is 2213141 bits. The original Morse text has a size of 2398580 bits. Thus, we have a compression rate of 1.08379.
-
-%%%%%
-
-\subsection{Question 6}
-\paragraph{}We can compute the expected average length of the Huffman code by computing the sum for the 4 symbols of the probability of each symbol times the length of the code associated with the symbol.
-We get that the expected average length is equal to 1.84538.\\
-By comparing to the empirical average length of the Huffman code, we get:
-$$\text{Length of encoded } / \text{ length of initial text} = 1.84538$$
-This value is the same as the one for the expected average length which is logical since the expected average length was computed based on the probabilities of occurrence of each symbol based on the given Morse text.\\
-By comparing to the theoretical bounds, we get that:\\
-\begin{equation}
-    \frac{H(S)}{log_2(q)} \leq \overline{n} \leq \frac{H(S)}{log_2(q)} + 1$ because $1.77138 \leq 1.84538 \leq 2.77138
-\end{equation}
-Thus, our code is optimal, because the inequation is satisfied, which was expected because Huffman codes are optimal. But, the obtained code is not absolutely optimal because $\frac{H(S)}{log_2(q)} \neq \overline{n}$.
-
-%%%%%
-
-\subsection{Question 7}
-\paragraph{}For the evolution of the empirical average length of the Huffman code with respect to the lengths of the input texts, we get the following plot:
-\begin{figure}[H]
-    \centering
-    \includegraphics[scale=0.5]{q7.png}
-    \caption{Evolution of empirical average length}
-\end{figure}
-As we can observe on the plot, the empirical average length decreases as the length of the input text increases.
-
-%%%%%
-
-\subsection{Question 14}
-\paragraph{}By computing the Huffman code on the original (27 symbols) text, we get the following code:
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|c|c|c|c|c|c|c|c|}
-    \hline
-    \textbf{Symbol} & \textbf{a} & \textbf{b} & \textbf{c} & \textbf{d} & \textbf{e} & \textbf{f} & \textbf{g} \\ \hline
-    \textbf{Code}   & 1010       & 100000     & 100010     & 11010      & 001        & 100011     & 00000      \\ \hline
-    \textbf{Symbol} & \textbf{h} & \textbf{i} & \textbf{j} & \textbf{k} & \textbf{l} & \textbf{m} & \textbf{n} \\ \hline
-    \textbf{Code}   & 0111       & 0100       & 1100111001 & 1100110    & 11000      & 110010     & 0110       \\ \hline
-    \textbf{Symbol} & \textbf{o} & \textbf{p} & \textbf{q} & \textbf{r} & \textbf{s} & \textbf{t} & \textbf{u} \\ \hline
-    \textbf{Code}   & 1001       & 100001     & 1100111011 & 0101       & 0001       & 1011       & 00001      \\ \hline
-    \textbf{Symbol} & \textbf{v} & \textbf{w} & \textbf{x} & \textbf{y} & \textbf{z} & \textbf{}  & \textbf{}  \\ \hline
-    \textbf{Code}   & 11001111   & 110110     & 1100111010 & 110111     & 1100111000 & 111        &            \\ \hline
-    \end{tabular}
-    \caption{Binary Huffman code for original text}
-\end{table}
-The expected average length of the code is 4.15047 and the experimental length of the encoded text is 1711279 bits.\\
-The original text has a size of 2061550 bits and the encoded text has a size of 1711279 bits. Thus, the compression rate is 1.2046 (= 2061550/1711279).
-
-%%%%%
-
-\subsection{Question 15}
-\paragraph{}By comparing the values obtained at the questions 5 and 14, we can conclude that it is better to encode
-directly the text without first converting it to Morse because the size of the encoded Morse text is 2213141 bits
-while the size of the encoded text is 1711279 bits. Furthermore, the compression rate obtained is higher in question 14
-compared to question 5.\\
-This can be justified theoretically by the fact that using Huffman encoding with 27 symbols instead of 4 symbols allows to
-benefit more from the frequencies of letters in English. For instance, the letter z in English is way less frequent
-than the letter e. While using the Morse encoding, the 2 symbols . and - both appear for some of the letters. Thus, we
-loose the benefit provided by less frequent letters that will get longer codes and more frequent letters will get shorter codes.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
