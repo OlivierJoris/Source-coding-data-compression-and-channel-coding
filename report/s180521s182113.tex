@@ -327,9 +327,13 @@ and can after increases the compression rate by reducing the number of bits used
 It should be due to the fact that the purpose of this algorithm is to use an online number of bits in opposite to LZ77 which might reserved useless bits as explained previously.
 
 \subsection{Question 13}
-\paragraph{}In order to increase the compression rate, we could use a modified Huffman algorithm for which, instead of considering individual letters, we would consider
+\paragraph{}In order to increase the compression rate, we could consider a modified Huffman algorithm for which, instead of considering individual letters, we would consider
 entire words. Thus, more frequent words would be assigned shorter codes whereas less frequent words would be assigned longer codes.
 So, it would further increase the compression rate.
+
+\paragraph{}Another idea could be to use LZ77 using a large window size as it is one of its main purpose and then apply Huffman on the output of the first algorithm.
+This implementation has been studied in the previous question and gave us the best result on a standard morse text. Thus, if we have frequent repetition of words with 
+a large distance, this algorithm will lead to better results.
 
 \subsection{Question 14}
 \paragraph{}By computing the Huffman code on the original (27 symbols) text, we get the following code:
