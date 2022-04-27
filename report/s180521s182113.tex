@@ -116,7 +116,7 @@ terms of optimality but is very robust because it does not need assumptions abou
 representative: when it contains a significant fraction of sufficiently long typical messages.
 
 \subsection{Question 4}
-\paragraph{}Running the example given in Figure 2 with our function and taking a \texttt{window\_size} of size 7 gives us this output: [(0, 0, 'a'), (0, 0, 'b'), (0, 0, 'r'), (3, 1, 'c'), (2, 1, 'd'), (7, 4, 'd')]. We have chosen to set the size of the look ahead buffer to the size of the window because it allows to have longer matches prefix and the prefix cannot be longer than the this size.
+\paragraph{}Running the example given in Figure 2 with our function and taking a \texttt{window\_size} of size 7 gives us this output: "00a00b00r31c21d74d". We have chosen to set the size of the look ahead buffer to the size of the window because it allows to have longer matches prefix and the prefix cannot be longer than the this size.
 
 \section{Source coding and reversible data compression}
 
@@ -175,17 +175,64 @@ As we can observe on the plot, the empirical average length decreases as the len
 algorithm is based on the frequency of each symbol whereas the LZ77 algorithm is based on referencing of 
 redundancy in previous blocks of symbols in the sequence. It is why the combination of these two algorithms can increase the compression rate according to the one obtained by using them alone.
 To combine these two algorithms we would first apply the LZ77 algorithm which has as purpose to detect the most redundant group of letters. We think it is better to first
-use the LZ77 algorithm because it might have group of letters which are the most frequent and that are not composed of the most frequent letters. For example: in english, the 
+use the LZ77 algorithm because it might have group of letters which are the most frequent and that are not composed of the most frequent letters. For example, in the english language, the 
 most frequent letter is 'e' and the second most frequent letter is 't' but the most frequent group of two letters 'th'. Letter-oriented Huffman is good at detecting and compressing files using the letter frequencies alone, but it cannot detect correlations between consecutive letters.
 Then we would apply Huffman on the sequence compressed using the LZ77 algorithm. 
 
-\paragraph{}In general, most data compression algorithms are using these 2 parts. First they run the original data through one or multiple transformations typically highly tuned to the particular kind of redundancy in the particular kind of data being compressed like JPEG is doing or tuned to the limitations of human perception like MPEG is doing. Next they run the intermediate data through a single "entropy coder" (arithmetic coding, or Huffman coding, or asymmetric numeral system coding) which is pretty much the same for every kind of data.
+\paragraph{}In general, most data compression algorithms are using these 2 parts. First they run the original data through one or multiple transformations typically highly tuned to the particular kind of redundancy in the particular kind of data being compressed like JPEG is doing or tuned to the limitations of human perception like MPEG is doing. Next they run the intermediate data through a single "entropy coder" like Huffman coding.
 
 \subsection{Question 11}
-\paragraph{}The length of encoded morse text is equal to 2769551 bits and the compression rate is thus equal to 0.866053739396747 which is, as expected, very low because we have taken a window size equal to 7.
+\paragraph{}The length of encoded morse text is equal to 2769551 bits and the compression rate is thus equal to 0.866053739396747.
 
 \subsection{Question 12}
-\paragraph{}
+
+\paragraph{}The values we obtained for the comparison of the lengths and compression rates of the encoded morse text according to the window size are in the table \ref{table:comparison}.
+
+\begin{table}
+    \begin{tabular}{|l|l|l|l|l|}
+    \hline
+    \textbf{Window size} & \textbf{LZ77 length} & \textbf{Huffman-LZ77 length} & \textbf{LZ77 CR} & \textbf{Huffman-LZ77 CR} \\ \hline
+    1                    & 3965216 bits         & 2574093 bits                 & 0.6049052561071074             & 0.9318155948522451                     \\ \hline
+    1001                 & 2703888 bits         & 2227673 bits                 & 0.8870855597569131             & 1.0767199674278944                     \\ \hline
+    2001                 & 2564544 bits         & 2103336 bits                 & 0.9352851813031868             & 1.1403693941433988                     \\ \hline
+    3001                 & 2580890 bits         & 2038045 bits                 & 0.9293615768203992             & 1.1769023745795604                     \\ \hline
+    4001                 & 2454972 bits         & 1992454 bits                 & 0.9770294732485747             & 1.203832058356178                      \\ \hline
+    5001                 & 2546684 bits         & 1957754 bits                 & 0.9418443748812181             & 1.225169250069212                      \\ \hline
+    6001                 & 2469908 bits         & 1928162 bits                 & 0.971121191558552              & 1.2439722388471508                     \\ \hline
+    7001                 & 2407188 bits         & 1903170 bits                 & 0.9964240433235793             & 1.2603078022457268                     \\ \hline
+    8001                 & 2355836 bits         & 1882121 bits                 & 1.0181438775874043             & 1.274402655302183                      \\ \hline
+    9001                 & 2478390 bits         & 1864961 bits                 & 0.9677976428245756             & 1.2861287715936152                     \\ \hline
+    10001                & 2435940 bits         & 1848255 bits                 & 0.9846630048359155             & 1.2977538272586846                     \\ \hline
+    11001                & 2400840 bits         & 1840006 bits                 & 0.9990586628013529             & 1.3035718361787951                     \\ \hline
+    \end{tabular}
+    \caption{Comparison of the lengths and compression rates of the encoded morse text according to the window size.}
+    \label{table:comparison}
+    \end{table}
+    
+
+\paragraph{}To make easier the comparison between the lengths and compression rates of the encoded morse text. A graphic is represented on the figures \ref{fig:length_comparison} and \ref{fig:compression_rate_comparison}.
+
+\begin{figure}[H]
+\center
+    \includegraphics[scale=0.7]{length_comparison.png}
+    \caption{Comparison of the length of the encoded morse text according to the window size.}
+    \label{fig:length_comparison}
+    \end{figure}
+
+\begin{figure}[H]
+    \center
+    \includegraphics[scale=0.7]{compression_rate_comparison.png}
+    \caption{Comparison of the compression rate of the encoded morse text according to the window size.}
+    \label{fig:compression_rate_comparison}
+    \end{figure}
+
+\paragraph{}We observe that we have better result when combining LZ77 with Huffman than when using LZ77 alone. Moreover, in both case the length is decreasing and the compression rate is increasing when the window size is increasing.
+One of the problem of LZ77 is that we might have reserved a lot of bits for the two first values of one LZ77 triplet. Indeed, these values requires at most $\lceil\log_2({\texttt{window\_size + 1})}\rceil$ bits to be encoded but we do not know in advance the amount of bits we will need and we thus reserve this amount of bits. It is especially a drawback for large window sizes: we are reserving $\lceil\log_2({\texttt{window\_size + 1})}\rceil$  bits for these values but
+if we have not a long repeating sequence, the majority of the most significant bits we have reserved will be set to 0 which corresponds to useless information. Huffman applied after LZ77 needs the frequency of the triplets computed by LZ77 
+and can after increases the compression rate by reducing the number of bits used to encode the triplets.
+
+\paragraph{}LZ online leads to a compressed sequence of length 1530401 bits which corresponds to a compression rate of 1.567288573386975 which are better results than the ones of the two other algorithms we used.
+It should be due to the fact that the purpose of this algorithm is to use an online number of bits in opposite to LZ77 which might reserved useless bits as explained previously.
 
 \subsection{Question 14}
 \paragraph{}By computing the Huffman code on the original (27 symbols) text, we get the following code:
