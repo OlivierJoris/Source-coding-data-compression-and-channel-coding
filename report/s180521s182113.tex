@@ -116,7 +116,7 @@ terms of optimality but is very robust because it does not need assumptions abou
 representative: when it contains a significant fraction of sufficiently long typical messages.
 
 \subsection{Question 4}
-\paragraph{}Running the example given in Figure 2 with our function and taking a \texttt{window\_size} of size 7 gives us this output: [(0, 0, 'a'), (0, 0, 'b'), (0, 0, 'r'), (3, 1, 'c'), (2, 1, 'd'), (7, 4, 'd')]. We have chosen to set the size of the look ahead buffer to the size of the window because it allows to have longer matches prefix and the prefix cannot be longer than the this size.
+\paragraph{}Running the example given in Figure 2 with our function and taking a \texttt{window\_size} of size 7 gives us this output: "00a00b00r31c21d74d". We have chosen to set the size of the look ahead buffer to the size of the window because it allows to have longer matches prefix and the prefix cannot be longer than the this size.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Channel coding}
@@ -250,23 +250,86 @@ As we can observe on the plot, the empirical average length decreases as the len
 %%%%%
 
 \subsection{Question 8}
-\paragraph{}By using the Lempel-Ziev algorithm to encode the Morse code, we get an encoded code with a total length of 1866281 bits.
+\paragraph{}By using the online Lempel-Ziev algorithm to encode the Morse code, we get an encoded code with a total length of 1866281 bits.
 The original Morse code has a size of 2398580 bits. Thus, we get a compression rate of $1.28522 = \frac{2398580}{1866281}$.
 
 %%%%%
 
 \subsection{Question 9}
 \paragraph{}By using LZ77 to encode the text, we get an encoded text with a total length of 2190809 bits.
-The original text has a size of 2061550 bits. Thus, we get a compression rate of $0.941 = \frac{2061550}{2190809}$.
+The original text has a size of 3060625 bits. Thus, we get a compression rate of 0.673572.
 
 %%%%%
+
+%%%%%
+\subsection{Question 10}
+\paragraph{}The two algorithms tackle the compression problem using different strategies. The Huffman 
+algorithm is based on the frequency of each symbol whereas the LZ77 algorithm is based on referencing of 
+redundancy in previous blocks of symbols in the sequence. It is why the combination of these two algorithms can increase the compression rate according to the one obtained by using them alone.
+To combine these two algorithms we would first apply the LZ77 algorithm which has as purpose to detect the most redundant group of letters. We think it is better to first
+use the LZ77 algorithm because it might have group of letters which are the most frequent and that are not composed of the most frequent letters. For example, in the english language, the 
+most frequent letter is 'e' and the second most frequent letter is 't' but the most frequent group of two letters 'th'. Letter-oriented Huffman is good at detecting and compressing files using the letter frequencies alone, but it cannot detect correlations between consecutive letters.
+Then we would apply Huffman on the sequence compressed using the LZ77 algorithm. 
+
+\paragraph{}In general, most data compression algorithms are using these 2 parts. First they run the original data through one or multiple transformations typically highly tuned to the particular kind of redundancy in the particular kind of data being compressed like JPEG is doing or tuned to the limitations of human perception like MPEG is doing. Next they run the intermediate data through a single "entropy coder" like Huffman coding.
+
+\subsection{Question 11}
+\paragraph{}The length of encoded morse text is equal to 2769551 bits and the compression rate is thus equal to 0.866053739396747.
+
+\subsection{Question 12}
+
+\paragraph{}The values we obtained for the comparison of the lengths and compression rates of the encoded morse text according to the window size are in the table \ref{table:comparison}.
+
+\begin{table}
+    \begin{tabular}{|l|l|l|l|l|}
+    \hline
+    \textbf{Window size} & \textbf{LZ77 length} & \textbf{Huffman-LZ77 length} & \textbf{LZ77 CR} & \textbf{Huffman-LZ77 CR} \\ \hline
+    1                    & 3965216 bits         & 2574093 bits                 & 0.6049052561071074             & 0.9318155948522451                     \\ \hline
+    1001                 & 2703888 bits         & 2227673 bits                 & 0.8870855597569131             & 1.0767199674278944                     \\ \hline
+    2001                 & 2564544 bits         & 2103336 bits                 & 0.9352851813031868             & 1.1403693941433988                     \\ \hline
+    3001                 & 2580890 bits         & 2038045 bits                 & 0.9293615768203992             & 1.1769023745795604                     \\ \hline
+    4001                 & 2454972 bits         & 1992454 bits                 & 0.9770294732485747             & 1.203832058356178                      \\ \hline
+    5001                 & 2546684 bits         & 1957754 bits                 & 0.9418443748812181             & 1.225169250069212                      \\ \hline
+    6001                 & 2469908 bits         & 1928162 bits                 & 0.971121191558552              & 1.2439722388471508                     \\ \hline
+    7001                 & 2407188 bits         & 1903170 bits                 & 0.9964240433235793             & 1.2603078022457268                     \\ \hline
+    8001                 & 2355836 bits         & 1882121 bits                 & 1.0181438775874043             & 1.274402655302183                      \\ \hline
+    9001                 & 2478390 bits         & 1864961 bits                 & 0.9677976428245756             & 1.2861287715936152                     \\ \hline
+    10001                & 2435940 bits         & 1848255 bits                 & 0.9846630048359155             & 1.2977538272586846                     \\ \hline
+    11001                & 2400840 bits         & 1840006 bits                 & 0.9990586628013529             & 1.3035718361787951                     \\ \hline
+    \end{tabular}
+    \caption{Comparison of the lengths and compression rates of the encoded morse text according to the window size.}
+    \label{table:comparison}
+    \end{table}
+    
+
+\paragraph{}To make easier the comparison between the lengths and compression rates of the encoded morse text. A graphic is represented on the figures \ref{fig:length_comparison} and \ref{fig:compression_rate_comparison}.
+
+\begin{figure}[H]
+\center
+    \includegraphics[scale=0.7]{length_comparison.png}
+    \caption{Comparison of the length of the encoded morse text according to the window size.}
+    \label{fig:length_comparison}
+    \end{figure}
+
+\begin{figure}[H]
+    \center
+    \includegraphics[scale=0.7]{compression_rate_comparison.png}
+    \caption{Comparison of the compression rate of the encoded morse text according to the window size.}
+    \label{fig:compression_rate_comparison}
+    \end{figure}
+
+\paragraph{}We observe that we have better result when combining LZ77 with Huffman than when using LZ77 alone. Moreover, in both case the length is decreasing and the compression rate is increasing when the window size is increasing.
+One of the problem of LZ77 is that we might have reserved a lot of bits for the two first values of one LZ77 triplet. Indeed, these values requires at most $\lceil\log_2({\texttt{window\_size + 1})}\rceil$ bits to be encoded but we do not know in advance the amount of bits we will need and we thus reserve this amount of bits. It is especially a drawback for large window sizes: we are reserving $\lceil\log_2({\texttt{window\_size + 1})}\rceil$  bits for these values but
+if we have not a long repeating sequence, the majority of the most significant bits we have reserved will be set to 0 which corresponds to useless information. Huffman applied after LZ77 needs the frequency of the triplets computed by LZ77 
+and can after increases the compression rate by reducing the number of bits used to encode the triplets.
+
+\paragraph{}As computed in the question 8, LZ online leads to a compressed sequence of length 1866281 bits which corresponds to a compression rate of 1.28522 which are better results than the ones we obtained using LZ77 but not when combining LZ77 and Huffman and taking a window of 11000.
+It should be due to the fact that the purpose of this algorithm is to use an online number of bits in opposite to LZ77 which might reserved useless bits as explained previously.
 
 \subsection{Question 13}
 \paragraph{}In order to increase the compression rate, we could use a modified Huffman algorithm for which, instead of considering individual letters, we would consider
 entire words. Thus, more frequent words would be assigned shorter codes whereas less frequent words would be assigned longer codes.
 So, it would further increase the compression rate.
-
-%%%%%
 
 \subsection{Question 14}
 \paragraph{}By computing the Huffman code on the original (27 symbols) text, we get the following code:
@@ -299,6 +362,83 @@ This can be justified theoretically by the fact that using Huffman encoding with
 benefit more from the frequencies of letters in English. For instance, the letter z in English is way less frequent
 than the letter e. While using the Morse encoding, the 2 symbols . and - both appear for some of the letters. Thus, we
 loose the benefit provided by less frequent letters that will get longer codes and more frequent letters will get shorter codes.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Channel coding}
+
+\subsection{Question 16}
+\paragraph{}In order to implement a function to read and display the given image, we used the methods \texttt{imread} and \texttt{imshow} provided by OpenCV.
+
+%%%%%
+
+\subsection{Question 17}
+\paragraph{}To encode the image signal, we used a fixed-length binary code of 8 bits. We have chosen 8 bits because there are 256 (from 0 to 255) possible values, so we need $\lceil log_2(256) \rceil =8$.\\
+The code is the binary representation of the grayscale value of each pixel.
+
+%%%%%
+
+\subsection{Question 18}
+\paragraph{}By simulating the channel effect on the binary signal of the image, we get the following image:
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.2]{q18.png}
+    \caption{Image after simulating the channel effect}
+\end{figure}
+As we can see in the picture, after simulating the channel effect, there are a lot of small dots\footnote{Zoom in the image to see them better.} that are pixels with different grayscale values
+compared to their very close neighbors.\\
+This is due to the fact that we are simulating a potential loss bit by bit and we are not using any sort of redundancy.
+Thus, if one of the most significant bits is modified, it completely changes the grayscale value for the pixel.
+
+%%%%%
+
+\subsection{Question 19}
+\paragraph{}In order to compute the Hamming(7,4) code for the binary image signal, we need to add 3 redundancy bits for every 4 bits. The 3 redundancy bits are:
+\begin{itemize}
+    \item Bit 1 = $(bit 0 + bit 1 + bit 2) \ mod \ 2$
+    \item Bit 2 = $(bit 1 + bit 2 + bit 3) \ mod \ 2$
+    \item Bit 3 = $(bit 0 + bit 2 + bit 3) \ mod \ 2$
+\end{itemize}
+where bit 0, bit 1, bit 2, and bit 3 are, respectively, the first, second, third, and fourth bits for which we want to add redundancy.\\
+By applying this principle on each block of 4 bits from the binary image signal, we get the Hamming(7,4) code for the entire binary image signal.
+
+%%%%%
+
+\subsection{Question 20}
+\paragraph{}If we decode the binary image signal with redundancy, we get the following image:
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.2]{q20.png}
+    \caption{Image after simulating the channel effect with redundancy}
+\end{figure}
+As we can see in the picture, we observe less dots compared to \textit{question 18}. This is because we used redundancy with the Hamming(7,4) code.
+Yet, we can still observe some dots. This is because Hamming(7,4) code can correct only one error per chunk of bits. In some cases, we might have more
+than one error per chunk thus the original source is not recoverable.
+\paragraph{}In order to decode the binary signal with redundancy, we used the syndrome decoding technique, as in the exercise sessions.\\
+To apply this technique, we consider that the source bits were correctly transmitted through the channel. Then, we recompute the 3 parity bits based on the received 4 source bits.
+Afterwards, we apply a bitwise and between the received parity bits and the re-computed parity bits.\\
+Based on the result of the bitwise operation, multiple cases are possible:
+\begin{itemize}
+    \item If 2 or 3 bits are 1 in the result of the bitwise operation, we can deduce that one of the source bit has been incorrectly transmitted.
+    To recover from the error, we can proceed the following way:
+        \begin{itemize}
+            \item If bits 0 and 1 of the bitwise and are 1, we need to flip the second source bit.
+            \item If bits 1 and 2 of the bitwise and are 1, we need to flip the fourth source bit.
+            \item If bits 0 and 2 of the bitwise and are 1, we need to flip the first source bit.
+            \item If all the bits of the bitwise and are 1, we need to flip the third source bit.
+        \end{itemize}
+    \item If 1 bit is 1 in the result of the bitwise operation, we can deduce that one of the parity bit has been incorrectly transmitted.
+    \item It is possible that 2 or more bits were transmitted incorrectly. In that case, we cannot recover from the error.
+\end{itemize}
+
+%%%%%
+
+\subsection{Question 21}
+\paragraph{}In order to reduce the loss of information, we could use Reed-Solomon codes instead of Hamming(7,4) because they allow to correct more than 1 errors
+in some situations.\\
+Another solution is to replace the type of channel. For instance, replacing copper wire with fiber optic in computer networks.
+But, it is not also feasible.\\
+There is always a trade-off between the rate and the capability of correcting from errors. Thus, in order to increase the rate,
+we would need to decrease the redundancy introduced for parity.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
