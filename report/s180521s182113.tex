@@ -116,7 +116,7 @@ terms of optimality but is very robust because it does not need assumptions abou
 representative: when it contains a significant fraction of sufficiently long typical messages.
 
 \subsection{Question 4}
-\paragraph{}Running the example given in Figure 2 with our function and taking a \texttt{window\_size} of size 7 gives us this output: "00a00b00r31c21d74d". We have chosen to set the size of the look ahead buffer to the size of the window because it allows to have longer matches prefix and the prefix cannot be longer than the this size.
+\paragraph{}Running the example given in Figure 2 with our function and taking a \texttt{window\_size} of size 7 gives us this output: "00a00b00r31c21d74d". 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Source coding and reversible data compression}
@@ -190,10 +190,10 @@ algorithm is based on the frequency of each symbol whereas the LZ77 algorithm is
 redundancy in previous blocks of symbols in the sequence. It is why the combination of these two algorithms can increase the compression rate compared to the ones obtained by using them alone.
 To combine these two algorithms we would first apply the LZ77 algorithm which has as purpose to detect the most redundant groups of letters. We think it is better to first
 use the LZ77 algorithm because it might have groups of letters which are the most frequent and that are not composed of the most frequent letters. For example, in the English language, the 
-most frequent letter is 'e' and the second most frequent letter is 't' but the most frequent group of two letters 'th'. Letter-oriented Huffman is good at detecting and compressing files using the letter frequencies alone, but it cannot detect correlations between consecutive letters.
+most frequent letter is 'e' and the second most frequent letter is 't' but the most frequent group of two letters is 'th'. Letter-oriented Huffman is good at detecting and compressing files using the letter frequencies alone, but it cannot detect correlations between consecutive letters.
 Then we would apply Huffman on the sequence compressed using the LZ77 algorithm. 
 
-\paragraph{}In general, most data compression algorithms are using these 2 parts. First, they run the original data through one or multiple transformations typically highly tuned to the particular kind of redundancy in the particular kind of data being compressed like JPEG is doing or tuned to the limitations of human perception like MPEG is doing. Next, they run the intermediate data through a single "entropy coder" like Huffman coding.
+\paragraph{}In general, most data compression algorithms are using these 2 parts. First, they run the original data through one or multiple transformations typically highly tuned to the particular kind of redundancy in the particular kind of data being compressed like JPEG is doing or tuned to the limitations of human perception like MPEG is doing. Next, they run the intermediate data through a single entropy coder like Huffman coding.
 
 \subsection{Question 11}
 \paragraph{}The length of encoded Morse text is equal to 2769551 bits and the compression rate is thus equal to 0.866053739396747.
