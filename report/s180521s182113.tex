@@ -103,7 +103,7 @@ the same as the one found during the exercise session. It is not a problem becau
 
 \subsection{Question 2}
 
-\paragraph{}The example given in the course about state of the art in data compression on slide 50/53 where the sequence 1011010100010 is encoded gives this output for our \texttt{LZ\_online} function:
+\paragraph{}The example given in the course about state of the art in data compression on slides 50/53 where the sequence 1011010100010 is encoded gives this output for our \texttt{LZ\_online} function:
 \begin{itemize}
     \item Dictionary: \{'': (0, ''), '1': (1, '1'), '0': (2, '00'), '11': (3, '011'), '01': (4, '101'), '010': (5, '1000'), '00': (6, '0100'), '10': (7, '0010')\}
     \item Encoded sequence: 100011101100001000010
@@ -187,22 +187,24 @@ The original text has a size of 3060625 bits. Thus, we get a compression rate of
 \subsection{Question 10}
 \paragraph{}The two algorithms tackle the compression problem using different strategies. The Huffman 
 algorithm is based on the frequency of each symbol whereas the LZ77 algorithm is based on referencing of 
-redundancy in previous blocks of symbols in the sequence. It is why the combination of these two algorithms can increase the compression rate according to the one obtained by using them alone.
-To combine these two algorithms we would first apply the LZ77 algorithm which has as purpose to detect the most redundant group of letters. We think it is better to first
-use the LZ77 algorithm because it might have group of letters which are the most frequent and that are not composed of the most frequent letters. For example, in the english language, the 
+redundancy in previous blocks of symbols in the sequence. It is why the combination of these two algorithms can increase the compression rate compared to the ones obtained by using them alone.
+To combine these two algorithms we would first apply the LZ77 algorithm which has as purpose to detect the most redundant groups of letters. We think it is better to first
+use the LZ77 algorithm because it might have groups of letters which are the most frequent and that are not composed of the most frequent letters. For example, in the English language, the 
 most frequent letter is 'e' and the second most frequent letter is 't' but the most frequent group of two letters 'th'. Letter-oriented Huffman is good at detecting and compressing files using the letter frequencies alone, but it cannot detect correlations between consecutive letters.
 Then we would apply Huffman on the sequence compressed using the LZ77 algorithm. 
 
-\paragraph{}In general, most data compression algorithms are using these 2 parts. First they run the original data through one or multiple transformations typically highly tuned to the particular kind of redundancy in the particular kind of data being compressed like JPEG is doing or tuned to the limitations of human perception like MPEG is doing. Next they run the intermediate data through a single "entropy coder" like Huffman coding.
+\paragraph{}In general, most data compression algorithms are using these 2 parts. First, they run the original data through one or multiple transformations typically highly tuned to the particular kind of redundancy in the particular kind of data being compressed like JPEG is doing or tuned to the limitations of human perception like MPEG is doing. Next, they run the intermediate data through a single "entropy coder" like Huffman coding.
 
 \subsection{Question 11}
-\paragraph{}The length of encoded morse text is equal to 2769551 bits and the compression rate is thus equal to 0.866053739396747.
+\paragraph{}The length of encoded Morse text is equal to 2769551 bits and the compression rate is thus equal to 0.866053739396747.
 
 \subsection{Question 12}
 
-\paragraph{}The values we obtained for the comparison of the lengths and compression rates of the encoded morse text according to the window size are in the table \ref{table:comparison}.
+\paragraph{}The values we obtained for the comparison of the lengths and compression rates of the encoded Morse text according to the window size are in the table \ref{table:comparison}.
 
-\begin{table}
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{%
     \begin{tabular}{|l|l|l|l|l|}
     \hline
     \textbf{Window size} & \textbf{LZ77 length} & \textbf{Huffman-LZ77 length} & \textbf{LZ77 CR} & \textbf{Huffman-LZ77 CR} \\ \hline
@@ -219,34 +221,35 @@ Then we would apply Huffman on the sequence compressed using the LZ77 algorithm.
     10001                & 2435940 bits         & 1848255 bits                 & 0.9846630048359155             & 1.2977538272586846                     \\ \hline
     11001                & 2400840 bits         & 1840006 bits                 & 0.9990586628013529             & 1.3035718361787951                     \\ \hline
     \end{tabular}
-    \caption{Comparison of the lengths and compression rates of the encoded morse text according to the window size.}
+    }
+    \caption{Comparison of the lengths and compression rates of the encoded Morse text according to the window size.}
     \label{table:comparison}
-    \end{table}
+\end{table}
     
 
-\paragraph{}To make easier the comparison between the lengths and compression rates of the encoded morse text, a graphic is represented on the figures \ref{fig:length_comparison} and \ref{fig:compression_rate_comparison}.
+\paragraph{}To make easier the comparison between the lengths and compression rates of the encoded Morse text, graphics are represented on the figures \ref{fig:length_comparison} and \ref{fig:compression_rate_comparison}.
 
 \begin{figure}[H]
 \center
-    \includegraphics[scale=0.7]{length_comparison.png}
-    \caption{Comparison of the length of the encoded morse text according to the window size.}
+    \includegraphics[scale=0.65]{length_comparison.png}
+    \caption{Comparison of the length of the encoded Morse text according to the window size.}
     \label{fig:length_comparison}
     \end{figure}
 
 \begin{figure}[H]
     \center
-    \includegraphics[scale=0.7]{compression_rate_comparison.png}
-    \caption{Comparison of the compression rate of the encoded morse text according to the window size.}
+    \includegraphics[scale=0.65]{compression_rate_comparison.png}
+    \caption{Comparison of the compression rate of the encoded Morse text according to the window size.}
     \label{fig:compression_rate_comparison}
     \end{figure}
 
-\paragraph{}We observe that we have better result when combining LZ77 with Huffman than when using LZ77 alone. Moreover, in both case the length is decreasing and the compression rate is increasing when the window size is increasing.
-One of the problem of LZ77 is that we might have reserved a lot of bits for the two first values of one LZ77 triplet. Indeed, these values requires at most $\lceil\log_2({\texttt{window\_size + 1})}\rceil$ bits to be encoded but we do not know in advance the amount of bits we will need and we thus reserve this amount of bits. It is especially a drawback for large window sizes: we are reserving $\lceil\log_2({\texttt{window\_size + 1})}\rceil$  bits for these values but
-if we have not a long repeating sequence, the majority of the most significant bits we have reserved will be set to 0 which corresponds to useless information. Huffman applied after LZ77 needs the frequency of the triplets computed by LZ77 
+\paragraph{}We observe that we have better results when combining LZ77 with Huffman than when using LZ77 alone. Moreover, in both cases the length is decreasing and the compression rate is increasing when the window size is increasing.
+One of the problem of LZ77 is that we might have reserved a lot of bits for the first two values of one LZ77 triplet. Indeed, these values require at most $\lceil\log_2({\texttt{window\_size + 1})}\rceil$ bits to be encoded but we do not know in advance the amount of bits we will need and we thus reserve this amount of bits. It is especially a drawback for large window sizes: we are reserving $\lceil\log_2({\texttt{window\_size + 1})}\rceil$  bits for these values but
+if we have not a long repeating sequence, the majority of the most significant bits we have reserved will be set to 0 which corresponds to useless information. Huffman applied after LZ77 needs the frequencies of the triplets computed by LZ77 
 and can after increases the compression rate by reducing the number of bits used to encode the triplets.
 
-\paragraph{}As computed in the question 8, LZ online leads to a compressed sequence of length 1866281 bits which corresponds to a compression rate of 1.28522 which are better results than the ones we obtained using LZ77 but not when combining LZ77 and Huffman and taking a window of 11000.
-It should be due to the fact that the purpose of this algorithm is to use an online number of bits in opposite to LZ77 which might reserved useless bits as explained previously.
+\paragraph{}As computed in the question 8, LZ online leads to a compressed sequence of length 1866281 bits which corresponds to a compression rate of 1.28522 which is a better result than the ones we obtained using LZ77 but not when combining LZ77 and Huffman and taking a window of 11000.
+It should be due to the fact that the purpose of this algorithm is to use an online number of bits in opposition to LZ77 which might reserved useless bits as explained previously.
 
 \subsection{Question 13}
 \paragraph{}In order to increase the compression rate, we could consider a modified Huffman algorithm for which, instead of considering individual letters, we would consider
@@ -254,7 +257,7 @@ entire words. Thus, more frequent words would be assigned shorter codes whereas 
 So, it would further increase the compression rate.
 
 \paragraph{}Another idea could be to use LZ77 using a large window size as it is one of its main purpose and then apply Huffman on the output of the first algorithm.
-This implementation has been studied in the previous question and gave us the best result on a standard morse text. Thus, if we have frequent repetition of words with 
+This implementation has been studied in the previous question and gave us the best result on a standard Morse text. Thus, if we have frequent repetitions of words with 
 a large distance, this algorithm will lead to better results.
 
 \subsection{Question 14}
@@ -275,7 +278,7 @@ a large distance, this algorithm will lead to better results.
     \caption{Binary Huffman code for original text}
 \end{table}
 The expected average length of the code is 4.15047 and the experimental length of the encoded text is 1711279 bits.\\
-The original text has a size of 2061550 bits and the encoded text has a size of 1711279 bits. Thus, the compression rate is 1.2046 (= 2061550/1711279).
+The original text has a size of 2061550 bits and the encoded text has a size of 1711279 bits. Thus, the compression rate is 1.2046 ($= 2061550/1711279$).
 
 %%%%%
 
@@ -359,10 +362,10 @@ Based on the result of the bitwise operation, multiple cases are possible:
 %%%%%
 
 \subsection{Question 21}
-\paragraph{}In order to reduce the loss of information, we could use Reed-Solomon codes instead of Hamming(7,4) because they allow to correct more than 1 errors
+\paragraph{}In order to reduce the loss of information, we could use Reed-Solomon codes instead of Hamming(7,4) because they allow to correct more than 1 error
 in some situations.\\
 Another solution is to replace the type of channel. For instance, replacing copper wire with fiber optic in computer networks.
-But, it is not also feasible.\\
+But, it is not always feasible.\\
 There is always a trade-off between the rate and the capability of correcting from errors. Thus, in order to increase the rate,
 we would need to decrease the redundancy introduced for parity.
 
